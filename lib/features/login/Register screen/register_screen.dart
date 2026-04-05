@@ -1,30 +1,33 @@
-import 'package:cairo_store_1/features/login/Register%20screen/register_screen.dart';
-import 'package:cairo_store_1/features/login/Forgot%20pass/forgot_pass.dart';
-import 'package:cairo_store_1/features/login/widget/input_field.dart';
+import 'package:cairo_store_1/features/login/login_scren.dart';
 import 'package:flutter/material.dart';
 
 
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _firstCtrl    = TextEditingController();
+  final _lastCtrl     = TextEditingController();
   final _emailCtrl    = TextEditingController();
-  final _passwordCtrl = TextEditingController();
-  bool _obscure = true;
+  final _phoneCtrl    = TextEditingController();
+  final _passCtrl     = TextEditingController();
+  final _confirmCtrl  = TextEditingController();
+  bool _obscurePass    = true;
+  bool _obscureConfirm = true;
 
   static const kYellow = Color(0xFFFFC107);
   static const kDark   = Color(0xFF1A1A1A);
-  static const kGrey   = Color(0xFF999999);
+  static const kGrey   = Color.fromARGB(255, 37, 35, 35);
 
   @override
   void dispose() {
-    _emailCtrl.dispose();
-    _passwordCtrl.dispose();
+    _firstCtrl.dispose(); _lastCtrl.dispose();
+    _emailCtrl.dispose(); _phoneCtrl.dispose();
+    _passCtrl.dispose();  _confirmCtrl.dispose();
     super.dispose();
   }
 
@@ -44,147 +47,140 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: sh * 0.05),
+                SizedBox(height: sh * 0.04),
 
-                // ── Language ───────────────────────────────────────────
+                // Language
                 Row(children: [
-                  RichText(
-                  text: TextSpan(
+                    Text('تسجيل حساب جديد',
                     style: TextStyle(
                         fontSize: sw * 0.062,
                         fontWeight: FontWeight.w800,
-                        color: kDark,
-                        height: 1.4,
-                        fontFamily: 'Cairo'),
-                    children: const [
-                      TextSpan(text: 'مرحبا بك في '),
-                      TextSpan(
-                          text: 'كايرو ستور',
-                          style: TextStyle(color: kYellow)),
-                    ],
-                  ),
-                ),
-                  const SizedBox(width: 30),
+                        color: kDark)),
+                   const SizedBox(width: 62),
                   Text('English',
                       style: TextStyle(fontSize: sw * 0.032, color: const Color(0xff264AA6)),),
                  const SizedBox(width: 4),
 
                  const Icon(Icons.language, size: 16, color: kGrey),
-
                 ]),
 
-                // ── Title ──────────────────────────────────────────────
-                Text('دخل بياناتك وكمل في ثوانى',
-                    style:
-                        TextStyle(fontSize: sw * 0.034, color: kGrey)),
+                Text('اعمل حساب جديد واستمتع بمزايا حصرية',
+                    style: TextStyle(
+                        fontSize: sw * 0.034, color: kGrey)),
 
                 SizedBox(height: sh * 0.006),
 
                 Row(children: [
-                 
-                  Text('  ليس لديك حساب؟',
-                      style: TextStyle(
-                          fontSize: sw * 0.032, color: kGrey)),
-                  SizedBox(width: sw * 0.02),
                   GestureDetector(
-                    onTap: () => Navigator.push(context,
+                    onTap: () => Navigator.pushReplacement(context,
                         MaterialPageRoute(
-                            builder: (_) => const RegisterScreen())),
-                    child: Text('تسجيل حساب',
+                            builder: (_) => const LoginScreen())),
+                    child: Text('تسجيل دخول',
                         style: TextStyle(
                             fontSize: sw * 0.032,
                             color: const Color(0xff264AA6),
                             decoration: TextDecoration.underline, 
-
                             fontWeight: FontWeight.w600)),
                   ),
-                  
+                  Text('  لديك حساب؟ ',
+                      style: TextStyle(
+                          fontSize: sw * 0.032, color: kGrey)),
                 ]),
 
-                SizedBox(height: sh * 0.04),
+                SizedBox(height: sh * 0.028),
 
-                // ── البريد ────────────────────────────────────────────
+                // الاسم الأول والأخير
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _FieldLabel('الاسم الأول', sw),
+                          SizedBox(height: sh * 0.006),
+                          _InputField(controller: _firstCtrl, sw: sw),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: sw * 0.03),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _FieldLabel('الاسم الأخير', sw),
+                          SizedBox(height: sh * 0.006),
+                          _InputField(controller: _lastCtrl, sw: sw),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: sh * 0.02),
+
                 _FieldLabel('البريد الإلكتروني', sw),
-                SizedBox(height: sh * 0.008),
-                InputField(
+                SizedBox(height: sh * 0.006),
+                _InputField(
                     controller: _emailCtrl,
                     suffixIcon: Icon(Icons.email_outlined, color: kGrey, size: sw * 0.05),
                     sw: sw),
 
-                SizedBox(height: sh * 0.022),
+                SizedBox(height: sh * 0.02),
 
-                // ── كلمة السر ─────────────────────────────────────────
+                _FieldLabel('رقم التليفون', sw),
+                SizedBox(height: sh * 0.006),
+                _InputField(
+                    controller: _phoneCtrl,
+                    keyboardType: TextInputType.phone,
+                    sw: sw),
+
+                SizedBox(height: sh * 0.02),
+
                 _FieldLabel('كلمة السر', sw),
-                SizedBox(height: sh * 0.008),
-                InputField(
-                  controller: _passwordCtrl,
-                  obscure: _obscure,
+                SizedBox(height: sh * 0.006),
+                _InputField(
+                  controller: _passCtrl,
+                  obscure: _obscurePass,
                   prefixIcon: IconButton(
                     icon: Icon(
-                        _obscure
+                        _obscurePass
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
                         color: kGrey,
                         size: sw * 0.05),
                     onPressed: () =>
-                        setState(() => _obscure = !_obscure),
+                        setState(() => _obscurePass = !_obscurePass),
                   ),
                   sw: sw,
                 ),
 
-                SizedBox(height: sh * 0.010),
+                SizedBox(height: sh * 0.02),
 
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(
-                            builder: (_) =>
-                                const ForgotPasswordScreen())),
-                    child: Text('هل نسيت كلمة السر ؟',
-                        style: TextStyle(
-                            fontSize: sw * 0.034  ,
-                           color: const Color(0xff264AA6),
-                            fontWeight: FontWeight.w600)),
+                _FieldLabel('تأكيد كلمة السر', sw),
+                SizedBox(height: sh * 0.006),
+                _InputField(
+                  controller: _confirmCtrl,
+                  obscure: _obscureConfirm,
+                  prefixIcon: IconButton(
+                    icon: Icon(
+                        _obscureConfirm
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: kGrey,
+                        size: sw * 0.05),
+                    onPressed: () =>
+                        setState(() => _obscureConfirm = !_obscureConfirm),
                   ),
+                  sw: sw,
                 ),
 
-                SizedBox(height: sh * 0.035),
+                SizedBox(height: sh * 0.032),
 
-                // ── زرار تسجيل دخول ───────────────────────────────────
                 _YellowButton(
-                    label: 'تسجيل دخول',
+                    label: 'تسجيل حساب',
                     sw: sw,
                     sh: sh,
                     onTap: () {}),
-
-                SizedBox(height: sh * 0.018),
-
-                Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                    
-                      Text('  ليس لديك حساب ؟',
-                          style: TextStyle(
-                              fontSize: sw * 0.032, color: kGrey)),
-                      SizedBox(width: sw * 0.02),
-                        GestureDetector(
-                        onTap: () => Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: (_) => const RegisterScreen())),
-                        child: Text('تسجيل حساب',
-                            style: TextStyle(
-                                fontSize: sw * 0.032,
-                               color: const Color(0xff264AA6),
-                                decoration: TextDecoration.underline, 
-
-                                fontWeight: FontWeight.w600)),
-                      ),
-                     
-                    ],
-                  ),
-                ),
 
                 SizedBox(height: sh * 0.022),
                 _SocialDivider(sw: sw),
@@ -213,6 +209,58 @@ Widget _FieldLabel(String text, double sw) {
   );
 }
 
+// ─── _InputField ──────────────────────────────────────────────────────────────
+
+class _InputField extends StatelessWidget {
+  final TextEditingController controller;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final bool obscure;
+  final double sw;
+    final TextInputType? keyboardType;
+
+  const _InputField({
+    required this.controller,
+    required this.sw,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.obscure = false,
+    this.keyboardType,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      obscureText: obscure,
+      keyboardType: keyboardType,
+      textDirection: TextDirection.ltr,
+      style: TextStyle(fontSize: sw * 0.038, color: const Color(0xFF1A1A1A)),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: sw * 0.04,
+          vertical: sw * 0.038,
+        ),
+        filled: true,
+        fillColor: const Color(0xFFF7F7F7),
+        prefixIcon: prefixIcon ,
+        suffixIcon: suffixIcon,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Color(0xFFFFC107), width: 1.5),
+        ),
+      ),
+    );
+  }
+}
 
 // ─── _YellowButton ───────────────────────────────────────────────────────────
 
@@ -277,7 +325,8 @@ class _SocialDivider extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: sw * 0.03),
           child: Text(
             'او سجل من خلال',
-            style: TextStyle(fontSize: sw * 0.032, color: const Color(0xFF999999)),
+            style: TextStyle(
+                fontSize: sw * 0.032, color: const Color(0xFF999999)),
           ),
         ),
         const Expanded(child: Divider(color: Color(0xFFE0E0E0))),
@@ -319,6 +368,7 @@ class _SocialRow extends StatelessWidget {
    
   ],
 );
+  
   }
 }
 
