@@ -240,6 +240,25 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.2"
+<<<<<<< HEAD
+=======
+  pin_code_fields:
+    dependency: "direct main"
+    description:
+      name: pin_code_fields
+      sha256: c8652519d14688f3fe2a8288d86910a46aa0b9046d728f292d3bf6067c31b4c7
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.4.0"
+  pinput:
+    dependency: "direct main"
+    description:
+      name: pinput
+      sha256: "4c3f1b84768b47a56a1abdaca551bd7cef4ac673b882209039ecdf803a5d6e68"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.2"
+>>>>>>> 5dab8e0 (all screen rgester)
   posix:
     dependency: transitive
     description:
@@ -261,6 +280,17 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
+=======
+  smart_auth:
+    dependency: "direct main"
+    description:
+      name: smart_auth
+      sha256: a536423c50d71e9a311d16027346634d0deadd07dafc5b5606b46719cf6fb2b6
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
+>>>>>>> 5dab8e0 (all screen rgester)
   source_span:
     dependency: transitive
     description:

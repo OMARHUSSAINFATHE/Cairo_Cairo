@@ -75,18 +75,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
 
-            // ── الصورة ─────────────────────────────────────────────────
-            SizedBox(
-              height: imgHeight,
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: (i) => setState(() => _currentPage = i),
-                itemCount: onboardingPages.length,
-                itemBuilder: (_, i) => Image.asset(
-                  onboardingPages[i].imagePath,
-                  fit: BoxFit.contain,
-                  width: double.infinity,
-                  height: imgHeight,
+
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SizedBox(
+                height: imgHeight,
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: (i) => setState(() => _currentPage = i),
+                  itemCount: onboardingPages.length,
+                  itemBuilder: (_, i) => Image.asset(
+                    onboardingPages[i].imagePath,
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: imgHeight,
+                  ),
                 ),
               ),
             ),
@@ -219,8 +222,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             ),
-          ],
-        ),
+          
+        ]),
       ),
     );
   }
